@@ -53,7 +53,6 @@ Frac.prototype.equals = function(that) {
            (this.k == that.k);
 }
 
-//*  something wrong with this piece of code
 // додавання цілого числа до дробу
 Frac.prototype.addValueToFrac = function(value) {
 	var _f = this.f*this.k*this.k;
@@ -65,8 +64,20 @@ Frac.prototype.addValueToFrac = function(value) {
     tmp.simplify();
     return tmp;
 }
-//*/
 
+//віднімання цілого від дробу
+Frac.prototype.minusValueToFrac = function(value) {
+	var _f = this.f*this.k*this.k;
+    var _n = this.k*this.n - value*this.d;
+    if (this.k<0) _n*=-1;
+    var kk;
+    (this.k<0)?kk=-1:kk=1;
+    var tmp = new Frac(_f,_n,this.d,kk);
+    tmp.simplify();
+    return tmp;
+}
+
+//визначення максимального цілого z<frac
 Frac.prototype.toInteger = function() {
 	return Math.floor(this.k*(Math.sqrt(this.f)+this.n)/this.d);
 } 
@@ -130,10 +141,31 @@ Frac.prototype.converse = function() {
 Frac.ZERO = new Frac(0,0,1,0);
 Complex.ONE = new Frac(0,1,1,1);
 
+//=============================================================================================================
+//================================================ P O L Y N O M ==============================================
+//=============================================================================================================
+
+
+
+//=============================================================================================================
+//================================================ C H A I N ==================================================
+//=============================================================================================================
+function Chain(frac) {
+    this.f = frac; 	     	// дріб
+    this.v = new Array();	// масив чисел
+	this.p = false; 		// періодичність (boolean)
+	//this.sp = startPeriod;	// номер елемента початку періоду в масиві 
+	//this.ep = endPeriod;	// номер елемента кінця періоду в масиві 
+}
+
+//*   
+Chain.prototype.find = function(frac) {
+       
+}
+// */
 
 function mainWorkFunction() {
-	var frac1 = new Frac(3,2,2,1); 
-	var frac2 = frac1.addValueToFrac(2);
-	frac2.addFracs(frac1, 1);
-	alert(frac2.toString());
+	var frac = new Frac(3,2,2,1); 
+	var chain = new Chain(frac);
+	alert(frac.toString());
 }
