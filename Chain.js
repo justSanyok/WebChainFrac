@@ -53,17 +53,17 @@ Frac.prototype.equals = function(that) {
            (this.k == that.k);
 }
 
-/*  something wrong with this piece of code
-// add two fracs
-Frac.prototype.addFracs = function(left, right) {
-	var _f = left.f*left.k*left.k;
-    var _n = left.k*left.n + right*left.d;
-    if (left.k<0) _n*=-1;
+//*  something wrong with this piece of code
+// додавання цілого числа до дробу
+Frac.prototype.addValueToFrac = function(value) {
+	var _f = this.f*this.k*this.k;
+    var _n = this.k*this.n + value*this.d;
+    if (this.k<0) _n*=-1;
     var kk;
-    (left.k<0)?kk=-1:kk=1;
-    var tmp = new Frac(_f,_n,left.d,kk);
+    (this.k<0)?kk=-1:kk=1;
+    var tmp = new Frac(_f,_n,this.d,kk);
     tmp.simplify();
-    this = tmp;
+    return tmp;
 }
 //*/
 
@@ -132,9 +132,8 @@ Complex.ONE = new Frac(0,1,1,1);
 
 
 function mainWorkFunction() {
-	var frac1 = new Frac(3,2,3,1); 
-	var frac2 = new Frac(3,3,3,1);
-	var frac3 = new Frac(0,0,0,0);
-	frac3.addFracs(frac1, frac2);
-	alert(frac3.toString());
+	var frac1 = new Frac(3,2,2,1); 
+	var frac2 = frac1.addValueToFrac(2);
+	frac2.addFracs(frac1, 1);
+	alert(frac2.toString());
 }
