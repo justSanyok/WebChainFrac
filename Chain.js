@@ -9,6 +9,8 @@ function gcd(a,b) {
 /*
  k*(n+sqrt(f))/d
 */
+
+//конструктор
 function Frac(radical, term, denominator, coefficient) {
     this.n = term;      	// доданок
     this.f = radical; 		// підкореневий вираз
@@ -16,6 +18,7 @@ function Frac(radical, term, denominator, coefficient) {
 	this.k = coefficient;	// коефіцієнт
 }
 
+//отримання окремих елементів дробу
 Frac.prototype.getN = function() {
 	return this.n;
 }
@@ -122,7 +125,8 @@ Frac.prototype.converse = function() {
 	tmp.simplify();
 	return tmp;
 }
- 
+
+// попередньо визначені дробові числа 
 Frac.ZERO = new Frac(0,0,1,0);
 Complex.ONE = new Frac(0,1,1,1);
 
