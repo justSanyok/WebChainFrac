@@ -7,7 +7,7 @@ function gcd(a,b) {
 ////////////////////////////////////////========== F R A C ==========///////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*
-    Р”СЂС–Р± РІРёРіР»СЏРґСѓ   k*(n+sqrt(f))/d
+ k*(n+sqrt(f))/d
 */
 function Frac(radical, term, denominator, coefficient) {
     this.n = term;      	// РґРѕРґР°РЅРѕРє
@@ -15,10 +15,7 @@ function Frac(radical, term, denominator, coefficient) {
 	this.d = denominator; 	// Р·РЅР°РјРµРЅРЅРёРє
 	this.k = coefficient;	// РєРѕРµС„С–С†С–С”РЅС‚
 }
-/*
-    РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
- */
-// РѕС‚СЂРёРјР°РЅРЅСЏ РµР»РµРјРµРЅС‚С–РІ РґСЂРѕР±Сѓ
+
 Frac.prototype.getN = function() {
 	return this.n;
 }
@@ -34,13 +31,11 @@ Frac.prototype.getD = function() {
 Frac.prototype.getK = function() {
 	return this.k;
 }
- 
-// Перетворення в рядок
+
 Frac.prototype.toString = function() {
     return this.k + "*(" + this.n + "+V" + this.f + ")/" + this.d;
 };
 
-// Перевірка рівності заданому числу
 Frac.prototype.equalsNumber = function(value) {
     return (this.f == 0)&&
            (this.n == value)&&
@@ -48,7 +43,6 @@ Frac.prototype.equalsNumber = function(value) {
            (this.k == 1);
 };
 
-//Перевірка рівності іншому дробу
 Frac.prototype.equals = function(that) {
     return (this.f == that.f)&&
            (this.n == that.n)&&
@@ -70,17 +64,14 @@ Frac.prototype.addFracs = function(left, right) {
 }
 //*/
 
-//Визначення найбільшого цілого числа z<frac
 Frac.prototype.toInteger = function() {
 	return Math.floor(this.k*(Math.sqrt(this.f)+this.n)/this.d);
 } 
  
-//Чи є радикал повним квадратом
 Frac.prototype.isFullSquare =function() {
 	return Math.abs(Math.floor(Math.sqrt(this.f))-Math.sqrt(this.f))<1e-8;
 } 
 
-//Cпрощення дробу
 Frac.prototype.simplify =function() {
 	var u;
 	var _n;
@@ -125,7 +116,6 @@ Frac.prototype.simplify =function() {
         }
 }
 
-//Перевертає дріб і спрощує
 Frac.prototype.converse = function() {
 	var new_d = this.k*(this.f-this.n*this.n);
 	var tmp = new Frac(this.f,-this.n,new_d,this.d);
@@ -133,7 +123,6 @@ Frac.prototype.converse = function() {
 	return tmp;
 }
  
-// деякі попередньо визначені числа
 Frac.ZERO = new Frac(0,0,1,0);
 Complex.ONE = new Frac(0,1,1,1);
 
