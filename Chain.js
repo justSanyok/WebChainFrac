@@ -56,8 +56,8 @@ Frac.prototype.equals = function(that) {
            (this.k == that.k);
 }
 
-/*  тут лажа
-//додавання двох дробів і повернення результату у третій
+/*  something wrong with this piece of code
+// add two fracs
 Frac.prototype.addFracs = function(left, right) {
 	var _f = left.f*left.k*left.k;
     var _n = left.k*left.n + right*left.d;
