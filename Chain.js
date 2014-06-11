@@ -11,7 +11,7 @@ function gcd(a,b) {
 */
 
 //конструктор
-function Frac(radical, term, denominator, coefficient) {
+function Frac(radical=0, term=0, denominator=1, coefficient=1) {
     this.n = term;      	// доданок
     this.f = radical; 		// підкореневий вираз
 	this.d = denominator; 	// знаменник
@@ -153,6 +153,7 @@ Frac.ONE = new Frac(0,1,1,1);
 function Chain(frac) {
     this.f = frac; 	     	// дріб
     this.v = new Array();	// масив чисел
+    this.w = new Array();	// масив фігні
     this.p = false; 		// періодичність (boolean)
 	//this.sp = startPeriod;	// номер елемента початку періоду в масиві 
 	//this.ep = endPeriod;	// номер елемента кінця періоду в масиві 
@@ -165,7 +166,7 @@ Chain.prototype.find = function(frac) {
 // */
 
 function mainWorkFunction() {
-	var frac = new Frac(3,2,2,1); 
+	var frac = new Frac(3,2,2); 
 	var chain = new Chain(frac);
-	alert(frac.toString());
+	alert(chain.f.toString());
 }
