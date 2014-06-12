@@ -11,6 +11,7 @@ function Quaternion(Re=0, I=0, J=0, K=0) {
 
 Quaternion.prototype.toString = function() {
 	var s;
+	if (this.re==0 && this.i==0 && this.j==0 && this.k==0) return 0;
 	if (this.re) s=this.re;
 	if (this.i>0) s+="+"+this.i+"i";
 	if (this.i<0) s+=this.i+"i";
@@ -40,7 +41,6 @@ Quaternion.prototype.mult = function(m2,mr) {
 	mr.i=this.re*m2.i+this.i*m2.re+this.j*m2.k-this.k*m2.j;
 	mr.j=this.re*m2.j-this.i*m2.k+this.j*m2.re+this.k*m2.i;
 	mr.k=this.re*m2.k+this.i*m2.j-this.j*m2.i+this.k*m2.re;
-	//return Quaternion(re,im,jm,km);
 }
 
 Quaternion.prototype.norma = function() {
@@ -66,6 +66,7 @@ function mainWorkFunction2() {
 	var q1 = new Quaternion(1,1,1,0); 
 	var q2 = new Quaternion(1,1,0,0); 
 	var l = new Quaternion();
+	alert(l.toString());
 	var r = new Quaternion();
 	q1.division(q2,l,r);
 	alert(l.toString());
