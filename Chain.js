@@ -3,6 +3,14 @@ function gcd(a,b) {
 	return (b)?gcd(b,a%b):a;
 }
 
+function min(a,b) {
+    return (a<b)?a:b;
+}
+
+function max(a,b) {
+    return (a>b)?a:b;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /*//////////////////////////////////////========== F R A C ==========/////////////////////////////////////*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,6 +153,87 @@ Frac.prototype.converse = function() {
 Frac.ZERO = new Frac({radical: 0, term: 0, denominator: 1, coefficient: 0});
 Frac.ONE = new Frac({radical: 0, term: 1, denominator: 1, coefficient: 1});
 
+/*===========================================================================================================*/
+/*============================================== P O L Y N O M ==============================================*/
+/*===========================================================================================================*/
+
+function Polynom(parameters) {
+    this.p = [];
+    var coefficients = parameters.coefficients;
+    var i=0;
+    var len=coefficients.length;
+    for(;i<len;i++) {
+        this.p[i] = coefficients[len-i-1];
+    }
+    this.deg=this.p.length;
+    this.simplify();
+}
+
+Polynom.prototype.toString = function() {
+    var i=this.deg-1;
+    var s="";
+    for(;i>0;i--) s+=this.p[i] + " ";
+    s+=this.p[0];
+    return s;
+};
+
+Polynom.prototype.deg = function() {
+    return this.deg;
+};
+
+Polynom.prototype.deleteLeadZero = function() {
+    while (this.p[this.deg-1]==0 && this.deg>1) {
+        this.deg--;
+    }
+};
+
+Polynom.prototype.simplify = function() {
+    if (this.deg < 2) return;
+    var i = this.deg-1;
+    var g = Math.abs(this.p[i]); i--;
+    for (;i>=0;i--) g = gcd(g,Math.abs(this.p[i]));
+    for (i=0;i<this.deg;i++) this.p[i]/=g;
+    this.deleteLeadZero();
+};
+
+Polynom.prototype.equalTo = function(that) {
+    if (this.deg != that.deg) return false;
+    var i = 0;
+    while (i<this.deg) {
+        if (this.p[i] != that.p[i]) return false;
+        i++;
+    }
+    return true;
+};
+
+Polynom.prototype.add = function(that) {
+    var tV = [];
+    var i=0;
+    var mn = min(this.p.length,that.p.length);
+    for (;i<mn;i++) tV[i] = this.p[i]+that.p[i];
+    if (this.p.length>that.p.length) {
+        for (;i<this.p.length;i++) tV[i]=this.p[i];
+    } else {
+        for (;i<that.p.length;i++) tV[i]=that.p[i];
+    }
+    var swap;
+    for (i=0;i<tV.length/2;i++) {
+        swap=tV[i];
+        tV[i] = tV[tV.length-1-i];
+        tV[tV.length-1-i] = swap;
+    }
+    var tP = new Polynom({coefficients: tV});
+    return tP;
+};
+
+Polynom.prototype.mult = function(that) {
+
+};
+
+Polynom.prototype.negative = function() {
+    var i = 0;
+    for(;i<this.p.length;i++) this.p[i]*=-1;
+};
 
 /*===========================================================================================================*/
 /*================================================ C H A I N ================================================*/
@@ -172,4 +261,14 @@ function mainWorkFunction() {
     var fr = new Frac({radical: 3, term: 2, denominator: 2, coefficient: 1});
 	var chain = new Chain({frac: fr});
 	alert(chain.toString());
+}
+
+function testPoly() {
+    var P = new Polynom({coefficients: [2,0,6,8]});
+    var Q = new Polynom({coefficients: [-2,0,6,8]});
+    var T = new Polynom({coefficients: [0]});
+    T = P.add(Q);
+    //alert(P.toString());
+    alert(Q.toString());
+    alert(T.toString());
 }
