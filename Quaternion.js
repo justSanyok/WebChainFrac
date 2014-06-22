@@ -10,15 +10,26 @@ function Quaternion(Re=0, I=0, J=0, K=0) {
 }
 
 Quaternion.prototype.toString = function() {
-	var s;
+	var s="";
 	if (this.re==0 && this.i==0 && this.j==0 && this.k==0) return 0;
-	if (this.re) s=this.re;
-	if (this.i>0) s+="+"+this.i+"i";
-	if (this.i<0) s+=this.i+"i";
-	if (this.j>0) s+="+"+this.j+"j";
-	if (this.j<0) s+=this.j+"j";
-	if (this.k>0) s+="+"+this.k+"i";
-	if (this.k<0) s+=this.k+"i";
+    if (this.re) {
+        s+=this.re;
+    }
+	var t=this.i;
+    if (t) {
+        if (t<0) {s+="-"; t*=(-1);} else {if (this.re) s+="+";}
+        if (t==1) {s+="i";} else {s+= t + "i";}
+    }
+    t=this.j;
+    if (t) {
+        if (t<0) {s+="-"; t*=(-1);} else {if (this.re || this.i) s+="+";}
+        if (t==1) {s+="j";} else {s+= t + "j";}
+    }
+    t=this.k;
+    if (t) {
+        if (t<0) {s+="-"; t*=(-1);} else {if (this.re || this.i || this.j) s+="+";}
+        if (t==1) {s+="k";} else {s+= t + "k";}
+    }	
 	return s; 
 }
 
@@ -27,6 +38,13 @@ Quaternion.prototype.addTo = function(term)  {
 	this.i+=term.i;
 	this.j+=term.j;
 	this.k+=term.k;
+}
+
+Quaternion.prototype.minusFrom = function(term)  {
+	this.re-=term.re;
+	this.i-=term.i;
+	this.j-=term.j;
+	this.k-=term.k;
 }
 
 Quaternion.prototype.add = function(term2,result) {
@@ -63,12 +81,7 @@ Quaternion.prototype.division = function(denominator,left,right) {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 function mainWorkFunction2() {
-	var q1 = new Quaternion(1,1,1,0); 
-	var q2 = new Quaternion(1,1,0,0); 
-	var l = new Quaternion();
-	alert(l.toString());
-	var r = new Quaternion();
-	q1.division(q2,l,r);
-	alert(l.toString());
-	alert(r.toString());
+	var q1 = new Quaternion(0,-1,0,9); 
+	alert(q1.toString());
+;
 }
