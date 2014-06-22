@@ -47,6 +47,12 @@ Frac.prototype.getK = function() {
 	return this.k;
 };
 
+Frac.prototype.setParam = function(_f,_n,_d) {
+    this.f = _f;
+    this.n = _n;
+    this.d = _d;
+};
+
 Frac.prototype.toString = function() {
     return this.k + "*(" + this.n + "+V" + this.f + ")/" + this.d;
 };
@@ -222,17 +228,102 @@ Polynom.prototype.add = function(that) {
         tV[i] = tV[tV.length-1-i];
         tV[tV.length-1-i] = swap;
     }
-    var tP = new Polynom({coefficients: tV});
-    return tP;
+    return new Polynom({coefficients: tV});
+};
+
+Polynom.prototype.minus = function(that) {
+    var tV = [];
+    var i=0;
+    var mn = min(this.p.length,that.p.length);
+    for (;i<mn;i++) tV[i] = this.p[i]-that.p[i];
+    if (this.p.length>that.p.length) {
+        for (;i<this.p.length;i++) tV[i]=this.p[i];
+    } else {
+        for (;i<that.p.length;i++) tV[i]=-that.p[i];
+    }
+    var swap;
+    for (i=0;i<tV.length/2;i++) {
+        swap=tV[i];
+        tV[i] = tV[tV.length-1-i];
+        tV[tV.length-1-i] = swap;
+    }
+    return new Polynom({coefficients: tV});
 };
 
 Polynom.prototype.mult = function(that) {
-
+    var tV = [];
+    var l = this.deg+that.deg;
+    var i=0;    var j;
+    for (;i<l;i++) tV[i] = 0;
+    for (i=0;i<this.deg;i++) {
+        j=0;
+        for (;j<that.deg;j++) {
+            tV[i+j] += this.p[i]*that.p[j];
+        }
+    }
+    var swap;
+    for (i=0;i<tV.length/2;i++) {
+        swap=tV[i];
+        tV[i] = tV[tV.length-1-i];
+        tV[tV.length-1-i] = swap;
+    }
+    return new Polynom({coefficients: tV});
 };
 
 Polynom.prototype.negative = function() {
     var i = 0;
     for(;i<this.p.length;i++) this.p[i]*=-1;
+};
+
+/*===========================================================================================================*/
+/*========================================== P O L Y N O M -F R A C =========================================*/
+/*===========================================================================================================*/
+
+function PolyFrac(parameters) {
+    this.n = parameters.numerator;
+    this.d = parameters.denominator;
+}
+
+PolyFrac.prototype.toString = function() {
+    var s = "("+this.n.toString() + ")/(" + this.d.toString() + ")";
+       return s;
+};
+
+PolyFrac.prototype.addValueTo = function(value) {
+    var tV = [];
+    var i = 0;
+    for (;i<this.d.deg;i++) tV[this.d.deg-1-i] = this.d.p[i]*value;
+    var tP = new Polynom({coefficients: tV});
+    this.n = this.n.add(tP);
+};
+
+PolyFrac.prototype.converse = function() {
+    var tP = this.n;
+    this.n = this.d;
+    this.d = tP;
+};
+
+PolyFrac.prototype.polyToSolve = function() {
+    var tP1 = this.d;
+    var tP2 = new Polynom({coefficients: [1,0]});
+    tP1 = tP1.mult(tP2);
+    tP1 = tP1.minus(this.n);
+    return tP1;
+};
+
+PolyFrac.prototype.returnFrac = function(signum) {
+    var tP = this.polyToSolve();
+    if (tP.deg==3) {
+        var f = tP.p[1]*tP.p[1] - 4*tP.p[0]*tP.p[2];
+        var n = -tP.p[1];
+        var d = 2*tP.p[2];
+        signum = (signum)==(tP.p[2]>0);
+        var x = new Frac({radical: 0, term: 0, denominator: 1, coefficient: 1});
+        (signum)? x.setParam(f,n,d): x.setParam(f,-n,-d);
+        x.simplify();
+        return x;
+    }
+    return frac.ZERO;
 };
 
 /*===========================================================================================================*/
@@ -264,11 +355,9 @@ function mainWorkFunction() {
 }
 
 function testPoly() {
-    var P = new Polynom({coefficients: [2,0,6,8]});
-    var Q = new Polynom({coefficients: [-2,0,6,8]});
-    var T = new Polynom({coefficients: [0]});
-    T = P.add(Q);
-    //alert(P.toString());
-    alert(Q.toString());
-    alert(T.toString());
+    var n = new Polynom({coefficients: [1,1]});
+    var d = new Polynom({coefficients: [1,-2]});
+    var x = new PolyFrac({numerator: n, denominator: d});
+    var f = x.returnFrac(true);
+    alert(f.toString());
 }
