@@ -430,6 +430,7 @@ function testPoly() {
     var cf = new Chain({frac: f});
     //cf.convertToChain();
     alert(cf.toStringChain());
+    cf.converToFrac();
     alert(cf.toStringFrac());
     //*/
 

@@ -1,0 +1,87 @@
+body{
+    background-color: #f6f6f6;
+}
+
+#wrapper{
+    height: 343px;
+    width: 300px;
+    margin: 150px auto 0;
+    position: relative;
+    box-shadow: 5px 10px 7px rgba(0, 0, 0, 0.05);
+    
+}
+
+#head {
+    background: url(img/hdr.png) repeat-x;
+    border: 1px solid #191919;
+    height: 41px;
+    max-width: 300px;
+    width: 300px;
+    display: block;
+    color: #fff;
+}
+
+#rip {
+    display: inline-block;
+    background:url(img/rip.png) no-repeat;
+    height: 23px;
+    width: 300px;
+    position: absolute;
+    top: 43px;
+    left: 1px;
+}
+
+#content {
+    border: 1px solid #cbcbcb;
+    height: 300px;
+    width: 300px;
+    background: url(img/bg.jpg) repeat-y;
+    display: block;
+    font:17pt 'Marck Script', cursive;
+}
+
+#btm {
+    margin:auto;
+    height: 6px;
+    width: 292px;
+    background: url(img/b.png) no-repeat;
+    display: block;
+}
+.line{
+    display: block;
+    position: absolute;
+}
+.firstLine{
+    top: 69px;
+    left: 50px;
+}
+.secondLine{
+    top: 99px;
+    left: 50px;
+}
+.thirddLine{
+    top: 129px;
+    left: 50px;
+}
+.fourthLine{
+    top: 159px;
+    left: 50px;
+}
+.answ{
+    top: 219px;
+    left: 50px;
+}
+.outputhLine{
+    top: 249px;
+    left: 50px;
+}
+input {
+    height: 25px;
+    width: 200px;
+    font:15pt 'Marck Script', cursive;
+    background: transparent;
+    border: none;
+}
+input:focus{
+    outline: none;
+}
