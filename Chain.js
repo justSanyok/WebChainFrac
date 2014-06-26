@@ -172,7 +172,7 @@ function Polynom(parameters) {
         this.p[i] = coefficients[len-i-1];
     }
     this.deg=this.p.length;
-    this.simplify();
+    //this.simplify();
 }
 
 Polynom.prototype.toString = function() {
@@ -308,6 +308,7 @@ PolyFrac.prototype.polyToSolve = function() {
     var tP2 = new Polynom({coefficients: [1,0]});
     tP1 = tP1.mult(tP2);
     tP1 = tP1.minus(this.n);
+    tP1.simplify();
     return tP1;
 };
 
@@ -355,9 +356,24 @@ function mainWorkFunction() {
 }
 
 function testPoly() {
+<<<<<<< HEAD
     var n = new Polynom({coefficients: [1,1]});
     var d = new Polynom({coefficients: [1,-2]});
     var x = new PolyFrac({numerator: n, denominator: d});
     var f = x.returnFrac(true);
     alert(f.toString());
+=======
+    /*
+    var f = new Frac({radical: 8, term: 0, denominator: 1, coefficient: 1});
+    var cf = new Chain({frac: f});
+    alert(cf.toStringChain());
+    alert(cf.toStringFrac());
+    //*/
+
+    //*
+    var cf = new Chain({arrayVariables: [2,1,1,1,4], startPeriod: 1, endPeriod: 4, isPeriodical: true});
+    alert(cf.toStringFrac());
+    alert(cf.toStringChain());
+    //*/
+>>>>>>> origin/master
 }

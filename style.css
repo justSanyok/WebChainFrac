@@ -1,0 +1,121 @@
+body{
+    background-color: #f6f6f6;
+}
+
+#wrapper{
+    height: 343px;
+    width: 300px;
+    margin: 150px auto 0;
+    position: relative;
+    box-shadow: 5px 10px 7px rgba(0, 0, 0, 0.05);
+    
+}
+
+#head {
+    background: url(img/hdr.png) repeat-x;
+    border: 1px solid #191919;
+    height: 41px;
+    max-width: 300px;
+    width: 300px;
+    display: block;
+    color: #fff;
+}
+
+#rip {
+    display: inline-block;
+    background:url(img/rip.png) no-repeat;
+    height: 23px;
+    width: 300px;
+    position: absolute;
+    top: 43px;
+    left: 1px;
+}
+
+#content {
+    border: 1px solid #cbcbcb;
+    height: 300px;
+    width: 300px;
+    background: url(img/bg.jpg) repeat-y;
+    display: block;
+    font:17pt 'Marck Script', cursive;
+}
+
+#btm {
+    margin:auto;
+    height: 6px;
+    width: 292px;
+    background: url(img/b.png) no-repeat;
+    display: block;
+}
+.line{
+    display: block;
+    position: absolute;
+}
+.firstLine{
+    top: 69px;
+    left: 50px;
+}
+.secondLine{
+    top: 99px;
+    left: 50px;
+}
+.thirddLine{
+    top: 129px;
+    left: 50px;
+}
+.fourthLine{
+    top: 159px;
+    left: 50px;
+}
+.answ{
+    top: 219px;
+    left: 50px;
+}
+.outputhLine{
+    top: 249px;
+    left: 50px;
+}
+input {
+    height: 25px;
+    width: 200px;
+    font:15pt 'Marck Script', cursive;
+    background: transparent;
+    border: none;
+}
+input:focus{
+    outline: none;
+}
+
+input[type="button"] {
+	width: auto;
+    height: 33px;
+	cursor: pointer;
+	margin: 0 0 10px 5px;
+	-moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #f5f5f5;
+    background-image: linear-gradient(to bottom, #fff, #e6e6e6);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #b3b3b3;
+    border-image: none;
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #333;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 4px 12px;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+    vertical-align: middle;
+}
+
+input[type="button"]:hover {
+    background-color: #e6e6e6;
+    background-position: 0 -15px;
+    transition: background-position 0.1s linear 0s;
+}
