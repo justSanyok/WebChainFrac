@@ -330,94 +330,24 @@ PolyFrac.prototype.returnFrac = function(signum) {
 /*================================================ C H A I N ================================================*/
 /*===========================================================================================================*/
 function Chain(parameters) {
-    if (parameters.frac === undefined) this.f = new Frac({radical: 0, term: 0, denominator: 0, coefficient: 0});
-        else this.f = parameters.frac;
-    if (parameters.arrayVariables === undefined) this.v = [];
-        else this.v = parameters.arrayVariables;
+    var frac = parameters.frac;
+    var arrV = parameters.arrayVariables;
+    var arrW = parameters.arrayReminders;
     var startPeriod = parameters.startPeriod;
     var endPeriod = parameters.endPeriod;
     var p = parameters.isPeriodical;
-    /* this.f = frac; 	     	 дріб                                     */
-    /* this.v = arrV;	         масив чисел                            */
+    this.f = frac; 	     	/* дріб                                     */
+    this.v = arrV;	        /* масив чисел                              */
+    this.w = arrW;	        /* масив залишків                           */
     this.p = p; 		    /* періодичність (boolean)                  */
 	this.sp = startPeriod;	/* номер елемента початку періоду в масиві  */
     this.ep = endPeriod;	/* номер елемента кінця періоду в масиві    */
 }
 
-Chain.prototype.convertToChain = function() {
-    var w = [];
-    var it=0;
-    var x = new Frac({radical: 0, term: 0, denominator: 1, coefficient: 1});
-    x = this.f;
-    var q, b;
-    do {
-        w[it] = x;
-        q = x.toInteger();
-        this.v[it++] = q;
-        x = x.minusValueToFrac(q);
-        if (!x.equalsNumber(0)) x = x.converse();
-        b = 0;
-        for (;b< w.length;b++) if (x.equals(w[b])) break;
-    } while (b==w.length && !x.equalsNumber(0));
-    this.p = (b != w.length);
-    if (this.p) {
-        this.sp = b;
-        this.ep = w.length-1;
-    }
-};
-
-Chain.prototype.converToFrac = function() {
-    var e = this.v.length-1;
-    if (!this.p && e>0) {
-        var x = new Frac({radical: 0, term: this.v[e], denominator: 1, coefficient: 1});
-        e--;
-        for (;e>=0;e--) {
-            x = x.converse();
-            x = x.addValueToFrac(this.v[e]);
-        }
-        this.f = x;
-    } else {
-        var x = new Polynom({coefficients: [1]});
-        var y = new Polynom({coefficients: [1,0]});
-        var a = new PolyFrac({numerator: x, denominator: y});
-        var e = this.ep;
-        for (;e>this.sp;e--) {
-            a.addValueTo(this.v[e]);
-            a.converse();
-        }
-        a.addValueTo(this.v[e]);
-        e--;
-        var fx = new Frac({radical: 0, term: 0, denominator: 1, coefficient: 1});
-        fx = a.returnFrac(this.v[e]>0);
-        for (;e>=0;e--) {
-            fx = fx.converse();
-            fx = fx.addValueToFrac(this.v[e]);
-        }
-        this.f = fx;
-    }
-};
-
-Chain.prototype.toStringChain = function() {
-    if (this.v.length == 0) this.convertToChain();
-    var s="[";
-    var i = 0;
-    for (;i<this.v.length;i++) {
-        if (this.p && (i==this.sp)) s+="(";
-        s+=this.v[i];
-        if (i==0) {s+=";";} else {s+=",";}
-    }
-    s = s.substring(0, s.length - 1);
-    if (this.p) s+= ")";
-    s+="]";
-    return s;
-};
-
-Chain.prototype.toStringFrac = function() {
-    if (this.f.d == 0) this.converToFrac();
+Chain.prototype.toString = function() {
     return this.f.toString();
 };
 
-/*========================================= TESTING FUNCTIONS ==============================================*/
 function mainWorkFunction() {
     var fr = new Frac({radical: 3, term: 2, denominator: 2, coefficient: 1});
 	var chain = new Chain({frac: fr});
@@ -425,19 +355,9 @@ function mainWorkFunction() {
 }
 
 function testPoly() {
-    //*
-    var f = new Frac({radical: 7, term: 0, denominator: 1, coefficient: 1});
-    var cf = new Chain({frac: f});
-    //cf.convertToChain();
-    alert(cf.toStringChain());
-    alert(cf.toStringFrac());
-    //*/
-
-    /*
-    var cf = new Chain({arrayVariables: [2,1,1,1,4], startPeriod: 1, endPeriod: 4, isPeriodical: true});
-    cf.converToFrac();
-    alert(cf.toStringFrac());
-    cf.convertToChain();
-    alert(cf.toStringChain());
-    //*/
+    var n = new Polynom({coefficients: [1,1]});
+    var d = new Polynom({coefficients: [1,-2]});
+    var x = new PolyFrac({numerator: n, denominator: d});
+    var f = x.returnFrac(true);
+    alert(f.toString());
 }
